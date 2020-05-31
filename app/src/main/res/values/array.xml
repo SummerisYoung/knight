@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_value">
+        <item >普普通通</item>
+        <item >门派弟子</item>
+        <item >小有名气</item>
+        <item >一流侠客</item>
+        <item >绝世高手</item>
+        <item >主角光环</item>
+    </string-array>
+</resources>
