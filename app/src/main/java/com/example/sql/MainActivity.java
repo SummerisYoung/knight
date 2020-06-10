@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                         flexboxLayout.addView(getFlexboxLayoutItemView(arrayLists.get(i)));
                     }
                 } else {
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(MainActivity.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
                     //失败直接打印即可
                     System.out.println("查询失败:" + e.getMessage() + "," + e.getErrorCode());
                 }

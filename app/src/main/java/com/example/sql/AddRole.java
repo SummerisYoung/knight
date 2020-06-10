@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -67,6 +68,9 @@ public class AddRole extends AppCompatActivity {
                                 }
                             });
                         }else{
+                            if(e.getErrorCode() == 9010){
+                                Toast.makeText(AddRole.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                            }
                             System.out.println("创建数据失败：" + e.getMessage());
                         }
                     }

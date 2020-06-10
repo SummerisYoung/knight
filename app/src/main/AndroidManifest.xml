@@ -16,24 +16,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MineRole"></activity>
-        <activity android:name=".Login">
+        <activity android:name="com.example.sql.MineRole"></activity>
+        <activity android:name="com.example.sql.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddRole" />
+        <activity android:name="com.example.sql.AddRole" />
         <activity
-            android:name=".RoleActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.example.sql.RoleActivity"
+            android:parentActivityName="com.example.sql.MainActivity" />
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.example.sql.BmobContentProvider" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name="com.example.sql.MainActivity"></activity>
     </application>
 
 </manifest>

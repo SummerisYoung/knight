@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -41,6 +42,9 @@ public class MineRole extends AppCompatActivity {
                     System.out.println("查询成功" + object.size());
                     initView(object.get(0));
                 } else {
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(MineRole.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
                     System.out.println("查询失败：" + e);
                 }
             }

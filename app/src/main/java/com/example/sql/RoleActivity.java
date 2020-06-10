@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -72,6 +70,9 @@ public class RoleActivity extends AppCompatActivity {
                 if (e == null) {
                     mine = object.get(0);
                 } else {
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(RoleActivity.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
                     System.out.println("查询失败：" + e);
                 }
             }
@@ -110,6 +111,9 @@ public class RoleActivity extends AppCompatActivity {
                     }
 
                 } else {
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(RoleActivity.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
                     //失败直接打印即可
                     System.out.println("查询失败:" + e.getMessage() + "," + e.getErrorCode());
                 }
@@ -181,6 +185,9 @@ public class RoleActivity extends AppCompatActivity {
                     }
                     info_text.setText(list.get(1).toString() + "  " + monster.getLevel() + "级");
                 }else{
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(RoleActivity.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
                     System.out.println("查询失败:" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
@@ -238,6 +245,9 @@ public class RoleActivity extends AppCompatActivity {
                         if(e==null){
                             System.out.println("更新成功:"+mine.getUpdatedAt());
                         }else{
+                            if(e.getErrorCode() == 9010){
+                                Toast.makeText(RoleActivity.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                            }
                             System.out.println("更新失败：" + e.getMessage());
                         }
                     }
@@ -335,7 +345,7 @@ public class RoleActivity extends AppCompatActivity {
         }
     }
 
-    //你出手
+    //对方出手
     private int monsterAttack() {
         int mineBloodLoss;//你掉的血
         if(monster.getAttack() > mine.getDefense()) {//你的攻击力高于对方的防御力
@@ -346,7 +356,7 @@ public class RoleActivity extends AppCompatActivity {
         return mineBloodLoss;
     }
 
-    //对方出手
+    //你出手
     private int mineAttack() {
         int monsterBloodLoss;//对方掉的血
         if(mine.getAttack() > monster.getDefense()) {//对方的攻击力高于你的防御力
@@ -391,6 +401,9 @@ public class RoleActivity extends AppCompatActivity {
                                 });
                                 dialog.dismiss();
                             }else{
+                                if(e.getErrorCode() == 9010){
+                                    Toast.makeText(RoleActivity.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                                }
                                 System.out.println("属性删除失败：" + e.getMessage());
                             }
                         }

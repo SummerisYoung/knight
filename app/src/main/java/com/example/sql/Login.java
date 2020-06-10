@@ -6,17 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -33,6 +29,13 @@ public class Login extends AppCompatActivity {
 
         EditText user = findViewById(R.id.username);
         EditText pass = findViewById(R.id.password);
+
+        if(user.getText().toString() == ""){
+            Toast.makeText(this, "请输入用户名", Toast.LENGTH_SHORT).show();
+        }
+        if(pass.getText().toString() == ""){
+            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+        }
 
         Button loginBtn = findViewById(R.id.login);
         Button signupBtn = findViewById(R.id.signup);
@@ -59,8 +62,12 @@ public class Login extends AppCompatActivity {
                     user.edit().putString("userid",bmobUser.getObjectId()).commit();//保存登录的侠客
                     goMainActivity();
                 }else {//密码输入错误
+                    System.out.println("非常" + e);
                     if(e.getErrorCode() == 101){
-                        Toast.makeText(Login.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "用户不存在或密码输入错误", Toast.LENGTH_SHORT).show();
+                    }
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(Login.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -78,11 +85,16 @@ public class Login extends AppCompatActivity {
                 if(e==null){
                     System.out.println("注册成功"+bmobUser.getUsername());
                     initAttrs();//设置基础属性
+                    SharedPreferences user = getSharedPreferences("user", Context.MODE_PRIVATE);//保存信息到缓存
+                    user.edit().putString("userid",bmobUser.getObjectId()).commit();//保存登录的侠客
                     goMainActivity();//跳转主页
                 }else{
                     System.out.println("注册失败"+e);
                     if(e.getErrorCode() == 202) {
                         Toast.makeText(Login.this, "用户名已存在", Toast.LENGTH_SHORT).show();
+                    }
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(Login.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -112,6 +124,9 @@ public class Login extends AppCompatActivity {
                 if (e == null) {
                     System.out.println("更新用户信息成功：");
                 } else {
+                    if(e.getErrorCode() == 9010){
+                        Toast.makeText(Login.this, "网络请求超时，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
                     System.out.println("error"+e.getMessage());
                 }
             }
